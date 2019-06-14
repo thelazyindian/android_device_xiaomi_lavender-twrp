@@ -35,23 +35,21 @@ env:
     global:
         - LC_ALL=C
         - USE_CCACHE=true
-        - TREE_DIR=$(pwd)
 
 before_install:
-    - echo $TREE_DIR
-    - sudo bash -c "curl https://storage.googleapis.com/git-repo-downloads/repo > /bin/repo && chmod a+x /bin/repo"
-    - sudo bash -c "mkdir /build && chown -R $whoami:$whoami /build && cd /build"
     - git config --global color.ui false
+    - sudo bash -c "curl https://storage.googleapis.com/git-repo-downloads/repo > /bin/repo && chmod a+x /bin/repo"
+    - mkdir -p $HOME/sources && cd $HOME/sources
     - repo init --depth=1 -u git://github.com/minimal-manifest-twrp/platform_manifest_twrp_omni.git -b twrp-9.0
     - repo sync
-    - mkdir -p /build/device/xiaomi/lavender
-    - cp -r $TREE_DIR /build/device/xiaomi/lavender
+    - mkdir -p device/xiaomi
+    - cp -r $TRAVIS_BUILD_DIR device/xiaomi/lavender
 
 script:
-    - source build/envsetup.sh && lunch omni_lavender-eng && make -j$(nproc) recoveryimage
+    - source build/envsetup.sh && lunch omni_lavender-eng && mka recoveryimage
 
 before_deploy:
-    - export FILE_TO_UPLOAD="/build/out/target/product/lavender/recovery.img"
+    - export FILE_TO_UPLOAD=$HOME/sources/out/target/product/lavender/recovery.img
 
 deploy:
     provider: releases
