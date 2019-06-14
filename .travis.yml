@@ -47,6 +47,7 @@ before_install:
     - cp -r $TRAVIS_BUILD_DIR device/xiaomi/lavender
 
 script:
+    - tree prebuilts/clang
     - source build/envsetup.sh && lunch omni_lavender-eng && mka recoveryimage
 
 before_deploy:
