@@ -8,7 +8,7 @@ addons:
     - flex
     - bison
     - gperf
-    - buidl-essential
+    - build-essential
     - zip
     - curl
     - zlib1g-dev
