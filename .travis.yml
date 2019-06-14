@@ -36,12 +36,13 @@ env:
         - LC_ALL=C
         - USE_CCACHE=true
         - TREE_DIR=$(pwd)
+        - DEBIAN_FRONTEND=noninteractive
 
 before_install:
     - echo $TREE_DIR
     - sudo bash -c "curl https://storage.googleapis.com/git-repo-downloads/repo > /bin/repo && chmod a+x /bin/repo"
     - sudo bash -c "mkdir /build && chown -R $whoami:$whoami /build && cd /build"
-    - repo init --depth=1 -q -u git://github.com/minimal-manifest-twrp/platform_manifest_twrp_omni.git -b twrp-9.0
+    - repo init --depth=1 -u git://github.com/minimal-manifest-twrp/platform_manifest_twrp_omni.git -b twrp-9.0
     - repo sync
     - rm -rf .repo && find . -type d -name ".git" -execdir rm -rf {} \;
     - mkdir -p /build/device/xiaomi/lavender
