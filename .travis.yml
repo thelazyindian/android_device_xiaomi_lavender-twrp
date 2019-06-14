@@ -1,10 +1,9 @@
 dist: xenial
-language: c
+language: minimal
 
 addons:
   apt:
     packages:
-    - git
     - git-core
     - gnupg
     - flex
@@ -26,9 +25,10 @@ addons:
     - libxml2-utils
     - xsltproc
     - unzip
+    - openjdk-8-jdk
+    - python
     - maven
     - schedtool
-    - tree
 
 cache: ccache
 
@@ -48,7 +48,6 @@ before_install:
     - cp -r $TRAVIS_BUILD_DIR device/xiaomi/lavender
 
 script:
-    - tree prebuilts/clang/host/linux-x86/clang-4691093/
     - source build/envsetup.sh && lunch omni_lavender-eng && mka recoveryimage
 
 before_deploy:
