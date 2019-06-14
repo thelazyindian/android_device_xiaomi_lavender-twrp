@@ -30,9 +30,10 @@ addons:
 cache: ccache
 
 env:
-    - LC_ALL=C
-    - USE_CCACHE=true
-    - TREE_DIR=$(pwd)
+    global:
+        - LC_ALL=C
+        - USE_CCACHE=true
+        - TREE_DIR=$(pwd)
 
 before_install:
     - echo $TREE_DIR
