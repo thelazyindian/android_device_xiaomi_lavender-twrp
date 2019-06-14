@@ -41,7 +41,7 @@ before_install:
     - git config --global color.ui false
     - sudo bash -c "curl https://storage.googleapis.com/git-repo-downloads/repo > /bin/repo && chmod a+x /bin/repo"
     - mkdir -p $HOME/sources && cd $HOME/sources
-    - repo init --depth=1 -u git://github.com/minimal-manifest-twrp/platform_manifest_twrp_omni.git -b twrp-9.0
+    - repo init --depth=1 -u git://github.com/omnirom/android.git -b android-9.0
     - repo sync
     - mkdir -p device/xiaomi
     - cp -r $TRAVIS_BUILD_DIR device/xiaomi/lavender
