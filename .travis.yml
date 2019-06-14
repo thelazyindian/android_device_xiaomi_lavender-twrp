@@ -42,6 +42,7 @@ before_install:
     - echo $TREE_DIR
     - sudo bash -c "curl https://storage.googleapis.com/git-repo-downloads/repo > /bin/repo && chmod a+x /bin/repo"
     - sudo bash -c "mkdir /build && chown -R $whoami:$whoami /build && cd /build"
+    - git config --global color.ui false
     - repo init --depth=1 -u git://github.com/minimal-manifest-twrp/platform_manifest_twrp_omni.git -b twrp-9.0
     - repo sync
     - rm -rf .repo && find . -type d -name ".git" -execdir rm -rf {} \;
