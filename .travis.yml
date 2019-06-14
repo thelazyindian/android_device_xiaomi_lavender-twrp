@@ -35,6 +35,7 @@ env:
     global:
         - LC_ALL=C
         - USE_CCACHE=true
+        - ALLOW_MISSING_DEPENDENCIES=true
 
 before_install:
     - git config --global color.ui false
