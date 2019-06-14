@@ -1,0 +1,59 @@
+dist: xenial
+addons:
+  apt:
+    packages:
+    - git
+    - git-core
+    - gnupg
+    - flex
+    - bison
+    - gperf
+    - buidl-essential
+    - zip
+    - curl
+    - zlib1g-dev
+    - gcc-multilib
+    - g++-multilib
+    - libc6-dev-i386
+    - lib32ncurses5-dev
+    - x11proto-core-dev
+    - libx11-dev
+    - lib32z-dev
+    - ccache
+    - libgl1-mesa-dev
+    - libxml2-utils
+    - xsltproc
+    - unzip
+    - maven
+    - schedtool
+
+cache: ccache
+
+env:
+    - LC_ALL=C
+    - USE_CCACHE=true
+    - TREE_DIR=$(pwd)
+
+before_install:
+    - echo $TREE_DIR
+    - curl https://storage.googleapis.com/git-repo-downloads/repo > /bin/repo && chmod a+x /bin/repo
+    - mkdir /build && cd /build
+    - repo init --depth=1 -u git://github.com/minimal-manifest-twrp/platform_manifest_twrp_omni.git -b twrp-9.0
+    - repo sync
+    - rm -rf .repo && find . -type d -name ".git" -execdir rm -rf {} \;
+    - mkdir -p /build/device/xiaomi/lavender
+    - cp -r $TREE_DIR /build/device/xiaomi/lavender
+
+script:
+    - source build/envsetup.sh && lunch omni_lavender-eng && make -j$(nproc) recoveryimage
+
+before_deploy:
+    - export FILE_TO_UPLOAD="/build/out/target/product/lavender/recovery.img"
+
+deploy:
+    provider: releases
+    api_key: $OAUTH_KEY
+    file: $FILE_TO_UPLOAD
+    skip_cleanup: true
+    on:
+        tags: true 
