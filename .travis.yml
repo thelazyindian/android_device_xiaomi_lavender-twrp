@@ -36,7 +36,6 @@ env:
         - LC_ALL=C
         - USE_CCACHE=true
         - TREE_DIR=$(pwd)
-        - DEBIAN_FRONTEND=noninteractive
 
 before_install:
     - echo $TREE_DIR
@@ -45,7 +44,6 @@ before_install:
     - git config --global color.ui false
     - repo init --depth=1 -u git://github.com/minimal-manifest-twrp/platform_manifest_twrp_omni.git -b twrp-9.0
     - repo sync
-    - rm -rf .repo && find . -type d -name ".git" -execdir rm -rf {} \;
     - mkdir -p /build/device/xiaomi/lavender
     - cp -r $TREE_DIR /build/device/xiaomi/lavender
 
