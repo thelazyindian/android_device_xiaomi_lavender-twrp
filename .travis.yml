@@ -61,5 +61,4 @@ deploy:
     file: $FILE_TO_UPLOAD
     skip_cleanup: true
     on:
-        tags: false
-        all_branches: true
+        tags: true
