@@ -43,12 +43,14 @@ before_install:
     - sudo bash -c "curl https://storage.googleapis.com/git-repo-downloads/repo > /bin/repo && chmod a+x /bin/repo"
     - mkdir -p $HOME/sources && cd $HOME/sources
     - repo init --depth=1 -u git://github.com/minimal-manifest-twrp/platform_manifest_twrp_omni.git -b twrp-9.0
-    - repo sync
+    - travis_wait 20 repo sync
     - mkdir -p device/xiaomi
     - cp -r $TRAVIS_BUILD_DIR device/xiaomi/lavender
 
 script:
-    - source build/envsetup.sh && lunch omni_lavender-eng && mka recoveryimage
+    - source build/envsetup.sh 
+    - lunch omni_lavender-eng
+    - mka recoveryimage
 
 before_deploy:
     - export FILE_TO_UPLOAD=$HOME/sources/out/target/product/lavender/recovery.img
